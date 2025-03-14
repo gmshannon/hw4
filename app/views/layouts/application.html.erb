@@ -10,14 +10,28 @@
   </head>
 
   <body>
-    <div>
-      <%= flash["notice"] %>
-    </div>
+    <% if flash[:notice] %>
+      <div style="color: white; background-color: green; padding: 10px; margin-bottom: 10px; text-align: center;">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div style="color: white; background-color: red; padding: 10px; margin-bottom: 10px; text-align: center;">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
     <div>
       <a href="/">Home</a>
-      <a href="/logout">Logout</a>
-      <a href="/login">Login</a>
-      <a href="/users/new">Signup</a>
+
+      <% if session[:user_id] %>
+        <span>Welcome, <%= User.find(session[:user_id]).username %>!</span>
+        <a href="/logout" class="nav-link">Logout</a>
+      <% else %>
+        <a href="/login">Login</a>
+        <a href="/users/new">Signup</a>
+      <% end %>
     </div>
 
     <%= yield %>

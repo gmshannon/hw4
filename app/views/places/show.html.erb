@@ -1,10 +1,23 @@
 <h1><%= @place["name"] %></h1>
 
 <h2>My Entries</h2>
-<% for entry in @entries %>
-  <h3><%= entry["title"] %></h3>
-  <h4><%= entry["occurred_on"] %></h4>
-  <p><%= entry["description"] %></p>
+
+<% if @entries.any? %>
+  <% @entries.each do |entry| %>
+    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+      <h3><%= entry["title"] %></h3>
+      <h4>Occurred on: 
+        <% if entry["occurred_on"].present? %>
+          <%= entry["occurred_on"].strftime("%B %d, %Y") %>
+        <% else %>
+          <em>No date provided</em>
+        <% end %>
+      </h4>
+      <p><%= entry["description"] %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>You haven't logged any entries for this place yet.</p>
 <% end %>
 
 <p>

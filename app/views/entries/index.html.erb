@@ -1,0 +1,13 @@
+<h1>All Entries</h1>
+
+<% if @entries.any? %>
+  <% @entries.each do |entry| %>
+    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+      <h2><%= entry.title %></h2>
+      <p><%= entry.description %></p>
+      <small>Posted at: <%= entry.created_at.strftime("%B %d, %Y %H:%M") %></small>
+    </div>
+  <% end %>
+<% else %>
+  <p>No entries found.</p>
+<% end %>

@@ -1,13 +1,13 @@
 class PlacesController < ApplicationController
-
   def index
     @places = Place.all
   end
 
   def show
-    @place = Place.find_by({ "id" => params["id"] })
-    @entries = Entry.where({ "place_id" => @place["id"] })
+    @place = Place.find_by(id: params["id"])
+    @entries = Entry.where(place_id: @place.id, user_id: session[:user_id]) # Show only this user's entries
   end
+  
 
   def new
   end
@@ -18,5 +18,4 @@ class PlacesController < ApplicationController
     @place.save
     redirect_to "/places"
   end
-
 end

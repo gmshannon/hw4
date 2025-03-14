@@ -1,6 +1,23 @@
 <h1>Login</h1>
 
-<form action="/sessions" method="post">
+<% if flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
 
-  <button>Login<button>
-</form>
+<%= form_with url: session_path, method: :post do |form| %>
+  <p>
+    <%= form.label :email %><br>
+    <%= form.email_field :email %>
+  </p>
+
+  <p>
+    <%= form.label :password %><br>
+    <%= form.password_field :password %>
+  </p>
+
+  <p>
+    <%= form.submit "Login" %>
+  </p>
+<% end %>
+
+<p>Don't have an account? <%= link_to "Sign up", new_user_path %></p>

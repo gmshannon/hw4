@@ -1,7 +1,12 @@
 class ApplicationController < ActionController::Base
-  before_action :current_user
+  before_action :require_login
 
-  def current_user
-    puts "------------------ code before every request ------------------"
+  private
+
+  def require_login
+    unless session[:user_id]
+      flash[:alert] = "You must be logged in to access this page."
+      redirect_to login_path
+    end
   end
 end
