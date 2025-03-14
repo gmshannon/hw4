@@ -1,27 +1,20 @@
-<h1><%= @place["name"] %></h1>
+<h1><%= @place.name %></h1>
 
 <h2>My Entries</h2>
+<% @entries.each do |entry| %>
+  <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+    <h3><%= entry.title %></h3>
+    <h4>Occurred on: <%= entry.occurred_on.strftime("%B %d, %Y") rescue "No date provided" %></h4>
+    <p><%= entry.description %></p>
 
-<% if @entries.any? %>
-  <% @entries.each do |entry| %>
-    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-      <h3><%= entry["title"] %></h3>
-      <h4>Occurred on: 
-        <% if entry["occurred_on"].present? %>
-          <%= entry["occurred_on"].strftime("%B %d, %Y") %>
-        <% else %>
-          <em>No date provided</em>
-        <% end %>
-      </h4>
-      <p><%= entry["description"] %></p>
-    </div>
-  <% end %>
-<% else %>
-  <p>You haven't logged any entries for this place yet.</p>
+    <% if entry.image.attached? %>
+      <p><%= image_tag entry.image.variant(resize_to_limit: [500, 500]).processed %></p>
+    <% end %>
+  </div>
 <% end %>
 
 <p>
-  <a href="/entries/new?place_id=<%= @place["id"] %>">New Entry</a>
+  <a href="/entries/new?place_id=<%= @place.id %>">New Entry</a>
 </p>
 
 <p>
