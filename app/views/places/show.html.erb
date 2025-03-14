@@ -1,22 +1,29 @@
-<h1><%= @place.name %></h1>
+<h1 class="mb-4"><%= @place.name %></h1>
 
-<h2>My Entries</h2>
-<% @entries.each do |entry| %>
-  <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-    <h3><%= entry.title %></h3>
-    <h4>Occurred on: <%= entry.occurred_on.strftime("%B %d, %Y") rescue "No date provided" %></h4>
-    <p><%= entry.description %></p>
+<h2 class="mb-3">My Entries</h2>
 
-    <% if entry.image.attached? %>
-      <p><%= image_tag entry.image.variant(resize_to_limit: [500, 500]).processed %></p>
+<div class="container">
+  <div class="row">
+    <% @entries.each do |entry| %>
+      <div class="col-md-4 mb-4"> <!-- Ensures spacing between each entry -->
+        <div class="card p-3 shadow-sm"> <!-- Adds padding inside each card -->
+          <% if entry.image.attached? %>
+            <%= image_tag entry.image.variant(resize_to_limit: [500, 500]).processed, class: "card-img-top mb-3" %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= entry.title %></h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              Occurred on: <%= entry.occurred_on.strftime("%B %d, %Y") rescue "No date provided" %>
+            </h6>
+            <p class="card-text"><%= entry.description %></p>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
-<% end %>
+</div>
 
-<p>
-  <a href="/entries/new?place_id=<%= @place.id %>">New Entry</a>
-</p>
-
-<p>
-  <a href="/places">Back to All Places</a>
-</p>
+<div class="mt-4"> <!-- Added margin for button spacing -->
+  <a href="/entries/new?place_id=<%= @place.id %>" class="btn btn-primary mb-3">New Entry</a>
+  <a href="/places" class="btn btn-secondary">Back to All Places</a>
+</div>
